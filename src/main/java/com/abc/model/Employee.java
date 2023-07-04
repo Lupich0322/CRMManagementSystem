@@ -1,14 +1,12 @@
 package com.abc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-        import jakarta.validation.constraints.NotEmpty;
-        import jakarta.validation.constraints.Size;
-        import lombok.Getter;
-        import lombok.NoArgsConstructor;
-        import lombok.Setter;
-
-
-        import java.io.Serializable;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import java.io.Serializable;
 
 /**
  * 用户类
@@ -17,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Getter
 @NoArgsConstructor
 @JsonIgnoreProperties(value = {"password"}, allowSetters = true)
-public class User implements Serializable {
+public class Employee implements Serializable {
 
     /**
      * 用户id
@@ -25,16 +23,21 @@ public class User implements Serializable {
     private Integer id;
 
     /**
+     * 工号
+     */
+    private String employeeCode;
+
+    /**
      * 用户名
      */
     @NotEmpty(message = "用户名不能为空！")
-    private String username;
+    private String employeeName;
 
     /**
      * 密码
      */
     @NotEmpty(message = "密码不能为空！")
     @Size(min = 8, message = "密码长度不能小于8！")
-    private String password;
+    private String employeePassword;
 
 }

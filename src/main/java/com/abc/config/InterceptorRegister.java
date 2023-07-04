@@ -20,7 +20,7 @@ public class InterceptorRegister implements WebMvcConfigurer {
      */
     @Bean
     public HandlerInterceptor getInterceptor() {
-        return new UserInterceptor();
+        return new EmployeeInterceptor();
     }
 
     /**
