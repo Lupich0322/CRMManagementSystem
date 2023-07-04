@@ -1,11 +1,8 @@
 package com.abc.service.impl;
 
-import com.abc.Result;
+import com.abc.util.Result;
 import com.abc.mapper.RoleMapper;
-import com.abc.model.Employee;
-import com.abc.model.Permission;
 import com.abc.model.Role;
-import com.abc.service.EmployeeService;
 import com.abc.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

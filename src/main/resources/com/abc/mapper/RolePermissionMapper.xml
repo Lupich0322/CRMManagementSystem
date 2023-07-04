@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.abc.mapper.RolePermissionMapper">
+    <resultMap id="rolePermissionResultMap" type="com.abc.model.RolePermission">
+        <id column="id" property="id"/>
+        <result column="role_id" property="roleId"/>
+        <result column="permission_id" property="permissionId"/>
+    </resultMap>
+
+    <insert id="addRolePermission" parameterType="com.abc.model.RolePermission">
+        insert into `role_permission` (role_id, permission_id)
+        values (#{roleId}, #{permissionId})
+    </insert>
+
+    <update id="updateRolePermission" parameterType="com.abc.model.RolePermission">
+        update `role_permission`
+        set role_id=#{roleId}, permission_id=#{permissionId}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRolePermission" parameterType="int">
+        delete from `role_permission` where id = #{id}
+    </delete>
+
+    <select id="getRolePermissionByRoleId" resultMap="rolePermissionResultMap">
+        select *
+        from `role_permission`
+        where role_id = #{roleId}
+    </select>
+
+    <select id="getRolePermissionByPermissionId" resultMap="rolePermissionResultMap">
+        select *
+        from `role_permission`
+        where permission_id = #{permissionId}
+    </select>
+
+    <select id="getRolePermissionByRoleIdAndPermissionId" resultMap="rolePermissionResultMap">
+        select *
+        from `role_permission`
+        where role_id = #{roleId} and permission_id = #{permissionId}
+    </select>
+
+</mapper>

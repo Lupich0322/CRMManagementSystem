@@ -1,6 +1,6 @@
 package com.abc.service;
 
-import com.abc.Result;
+import com.abc.util.Result;
 import com.abc.model.Permission;
 
 import java.util.List;

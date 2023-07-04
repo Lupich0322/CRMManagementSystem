@@ -1,6 +1,6 @@
 package com.abc.service;
 
-import com.abc.Result;
+import com.abc.util.Result;
 import com.abc.model.Employee;
 import com.abc.model.Permission;
 import com.abc.model.Role;
@@ -37,6 +37,22 @@ public interface EmployeeService {
     Result<Employee> update(Employee employee) throws Exception;
 
     /**
+     * 新增用户
+     *
+     * @param employee 用户对象
+     * @return 新增结果
+     */
+    Result<Employee> addEmployee(Employee employee);
+
+    /**
+     * 删除用户
+     *
+     * @param employeeCode 用户id
+     * @return 删除结果
+     */
+    Result<Void> deleteEmployee(Integer employeeCode);
+
+    /**
      * 判断用户是否登录（实际上就是从session取出用户id去数据库查询并比对）
      *
      * @param session 传入请求session
@@ -56,16 +72,16 @@ public interface EmployeeService {
     /**
      * 获取用户的所有角色
      *
-     * @param employeeId 用户id
+     * @param employeeCode 用户id
      * @return 用户的所有角色
      */
-    Result<List<Role>> getRolesByEmployeeId(Integer employeeId);
+    Result<List<Role>> getRolesByEmployeeCode(Integer employeeCode);
 
     /**
      * 获取用户的所有权限
      *
-     * @param employeeId 用户id
+     * @param employeeCode 用户id
      * @return 用户的所有权限
      */
-    Result<List<Permission>> getPermissionsByEmployeeId(Integer employeeId);
+    Result<List<Permission>> getPermissionsByEmployeeCode(Integer employeeCode);
 }

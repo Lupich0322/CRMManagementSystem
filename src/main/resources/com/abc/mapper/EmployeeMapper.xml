@@ -13,6 +13,11 @@
         values (#{employeeCode}, #{employeeName}, #{employeePassword})
     </insert>
 
+    <delete id="delete">
+        delete from `employee`
+        where employee_code = #{employeeCode}
+    </delete>
+
     <update id="update" parameterType="com.abc.model.Employee">
         update `employee`
         set employee_password=#{employeePassword}

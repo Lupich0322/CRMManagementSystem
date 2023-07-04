@@ -1,4 +1,4 @@
-package com.abc;
+package com.abc.util;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

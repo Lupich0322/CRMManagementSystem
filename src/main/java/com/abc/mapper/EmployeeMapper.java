@@ -28,6 +28,14 @@ public interface EmployeeMapper {
     int update(Employee employee);
 
     /**
+     * 删除用户
+     *
+     * @param employeeCode 工号
+     * @return 删除成功记录条数
+     */
+    int delete(Integer employeeCode);
+
+    /**
      * 根据使用者获取用户
      *
      * @param employeeName 使用者
@@ -43,8 +51,8 @@ public interface EmployeeMapper {
      */
     Employee getByEmployeeCode(Integer employeeCode);
 
-    List<Role> getRolesByEmployeeId(Integer employeeId);
+    List<Role> getRolesByEmployeeCode(Integer employeeCode);
 
-    List<Permission> getPermissionsByEmployeeId(Integer employeeId);
+    List<Permission> getPermissionsByEmployeeCode(Integer employeeCode);
 
 }
