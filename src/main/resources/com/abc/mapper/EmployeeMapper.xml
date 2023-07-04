@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.abc.mapper.EmployeeMapper">
     <resultMap id="userResultMap" type="com.abc.model.Employee">
-        <id column="id" property="id"/>
+        <id column="employee_code" property="employeeCode"/>
         <result column="employee_name" property="employeeName"/>
         <result column="employee_password" property="employeePassword"/>
-        <result column="employee_code" property="employeeCode"/>
     </resultMap>
+
 
     <insert id="add" parameterType="com.abc.model.Employee">
         insert into `employee` (employee_code, employee_name, employee_password)
@@ -18,12 +18,6 @@
         set employee_password=#{employeePassword}
         where employee_code = #{employeeCode}
     </update>
-
-    <select id="getById" resultMap="userResultMap">
-        select *
-        from `employee`
-        where id = #{id}
-    </select>
 
     <select id="getByEmployeeName" resultMap="userResultMap">
         select *

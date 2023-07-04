@@ -19,14 +19,9 @@ import java.util.List;
 public class Employee implements Serializable {
 
     /**
-     * 用户id
-     */
-    private Integer id;
-
-    /**
      * 工号
      */
-    private String employeeCode;
+    private Integer employeeCode;
 
     /**
      * 用户名

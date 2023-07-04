@@ -70,7 +70,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Result<Employee> update(Employee employee) throws Exception {
         Result<Employee> result = new Result<>();
         // 去数据库查找用户
-        Employee getEmployee = employeeMapper.getById(employee.getId());
+        Employee getEmployee = employeeMapper.getByEmployeeCode(employee.getEmployeeCode());
         if (getEmployee == null) {
             result.setResultFailed("用户不存在！");
             return result;
@@ -99,7 +99,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             return result;
         }
         // 登录了则去数据库取出信息进行比对
-        Employee getEmployee = employeeMapper.getById(sessionEmployee.getId());
+        Employee getEmployee = employeeMapper.getByEmployeeCode(sessionEmployee.getEmployeeCode());
         // 如果session用户找不到对应的数据库中的用户或者找出的用户密码和session中用户不一致则说明session中用户信息无效
         if (getEmployee == null || !getEmployee.getEmployeePassword().equals(sessionEmployee.getEmployeePassword())) {
             result.setResultFailed("用户信息无效！");
@@ -110,16 +110,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Result<Employee> select(Employee employee){
+    public Result<Employee> getByEmployeeCode(Integer employeeCode){
         Result<Employee> result = new Result<>();
         // 去数据库查找用户
-        Employee getEmployee = employeeMapper.getByEmployeeCode(employee.getEmployeeCode());
+        Employee getEmployee = employeeMapper.getByEmployeeCode(employeeCode);
         if (getEmployee == null) {
             result.setResultFailed("用户不存在！");
             return result;
         }
-        employeeMapper.getByEmployeeCode(String.valueOf(employee));
-        result.setResultSuccess("查询成功！", employee);
+        result.setResultSuccess("查询成功！", getEmployee);
         return result;
     }
 

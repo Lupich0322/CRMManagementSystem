@@ -10,9 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 
 
 @RestController
@@ -22,7 +19,6 @@ public class EmployeeController {
      * session的字段名
      */
     public static final String SESSION_NAME = "userInfo";
-    private static int employeeCounter = 1;
 
     @Autowired
     private EmployeeService employeeService;
@@ -44,18 +40,11 @@ public class EmployeeController {
             return result;
         }
 
-        // 自动生成工号，使用递增的值
-        String employeeCode = LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE)
-                + "-" + employeeCounter;
-        employee.setEmployeeCode(employeeCode);
-
-        // 更新计数器的值
-        employeeCounter++;
-
         // 调用注册服务
         result = employeeService.register(employee);
         return result;
     }
+
 
     /**
      * 用户登录
@@ -108,7 +97,7 @@ public class EmployeeController {
         HttpSession session = request.getSession();
         // 检查session中的用户（即当前登录用户）是否和当前被修改用户一致
         Employee sessionEmployee = (Employee) session.getAttribute(SESSION_NAME);
-        if (sessionEmployee.getId() != employee.getId().intValue()) {
+        if (sessionEmployee.getEmployeeCode() != employee.getEmployeeCode().intValue()) {
             result.setResultFailed("当前登录用户和被修改用户不一致，终止！");
             return result;
         }
@@ -133,11 +122,11 @@ public class EmployeeController {
         HttpSession session = request.getSession();
         // 检查session中的用户（即当前登录用户）是否和当前被修改用户一致
         Employee sessionEmployee = (Employee) session.getAttribute(SESSION_NAME);
-        if (sessionEmployee.getId() != employee.getId().intValue()) {
+        if (sessionEmployee.getEmployeeCode() != employee.getEmployeeCode().intValue()) {
             result.setResultFailed("当前登录用户和不一致，终止！");
             return result;
         }
-        result = employeeService.select(employee);
+        result = employeeService.getByEmployeeCode(employee.getEmployeeCode());
         // 修改成功则刷新session信息
         if (result.isSuccess()) {
             session.setAttribute(SESSION_NAME, result.getData());
@@ -148,7 +137,7 @@ public class EmployeeController {
     /**
      * 工号新增
      *
-     * @param employee    修改后用户信息对象
+     * @param
      * @param request 请求对象，用于操作session
      * @return 修改结果
      */

@@ -48,10 +48,10 @@ public interface EmployeeService {
     /**
      * 根据工号查询用户信息
      *
-     * @param employee 用户对象
+     * @param employeeCode 用户对象
      * @return 查询结果
      */
-    Result<Employee> select(Employee employee);
+    Result<Employee> getByEmployeeCode(Integer employeeCode);
 
     /**
      * 获取用户的所有角色

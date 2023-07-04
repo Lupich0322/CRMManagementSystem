@@ -28,14 +28,6 @@ public interface EmployeeMapper {
     int update(Employee employee);
 
     /**
-     * 根据id获取用户
-     *
-     * @param id 用户id
-     * @return 用户对象
-     */
-    Employee getById(Integer id);
-
-    /**
      * 根据使用者获取用户
      *
      * @param employeeName 使用者
@@ -49,8 +41,7 @@ public interface EmployeeMapper {
      * @param employeeCode 工号
      * @return 用户对象
      */
-    Employee getByEmployeeCode(String employeeCode);
-
+    Employee getByEmployeeCode(Integer employeeCode);
 
     List<Role> getRolesByEmployeeId(Integer employeeId);
 
