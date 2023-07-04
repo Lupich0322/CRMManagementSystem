@@ -1,6 +1,6 @@
-package com.abc.api;
+package com.abc.controller;
 
-import com.abc.controller.Result;
+import com.abc.Result;
 import com.abc.model.Employee;
 import com.abc.service.EmployeeService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 
 @RestController
-public class EmployeeAPI {
+public class EmployeeController {
 
     /**
      * session的字段名

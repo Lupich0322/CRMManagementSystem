@@ -1,6 +1,5 @@
 package com.abc.mapper;
 
-import com.abc.model.Permission;
 import com.abc.model.Role;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,7 +8,15 @@ import java.util.List;
 @Mapper
 public interface RoleMapper {
 
-    Role getRoleById(Integer id);
+    int add(Role role);
 
-    List<Permission> getPermissionsByRoleId(Integer roleId);
+    int update(Role role);
+
+    int delete(Integer id);
+
+    Role getById(Integer id);
+
+    Role getByRoleCode(String roleCode);
+
+    List<Role> getAllRoles();
 }

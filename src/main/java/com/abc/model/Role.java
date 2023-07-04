@@ -20,13 +20,14 @@ public class Role implements Serializable {
     private Integer id;
 
     /**
+     * 角色编码
+     */
+    @NotEmpty(message = "角色编码不能为空！")
+    private String roleCode;
+
+    /**
      * 角色名称
      */
     @NotEmpty(message = "角色名称不能为空！")
     private String roleName;
-
-    /**
-     * 角色的权限集合
-     */
-    private List<Permission> permissions;
 }

@@ -1,6 +1,7 @@
 package com.abc.mapper;
 
 import com.abc.model.Employee;
+import com.abc.model.Permission;
 import com.abc.model.Role;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -52,5 +53,7 @@ public interface EmployeeMapper {
 
 
     List<Role> getRolesByEmployeeId(Integer employeeId);
+
+    List<Permission> getPermissionsByEmployeeId(Integer employeeId);
 
 }

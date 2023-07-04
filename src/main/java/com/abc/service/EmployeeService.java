@@ -1,8 +1,9 @@
 package com.abc.service;
 
-import com.abc.controller.Result;
+import com.abc.Result;
 import com.abc.model.Employee;
 import com.abc.model.Permission;
+import com.abc.model.Role;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
@@ -53,11 +54,18 @@ public interface EmployeeService {
     Result<Employee> select(Employee employee);
 
     /**
+     * 获取用户的所有角色
+     *
+     * @param employeeId 用户id
+     * @return 用户的所有角色
+     */
+    Result<List<Role>> getRolesByEmployeeId(Integer employeeId);
+
+    /**
      * 获取用户的所有权限
      *
      * @param employeeId 用户id
      * @return 用户的所有权限
      */
     Result<List<Permission>> getPermissionsByEmployeeId(Integer employeeId);
-
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.abc.mapper.PermissionMapper">
+    <resultMap id="permissionResultMap" type="com.abc.model.Permission">
+        <id column="id" property="id"/>
+        <result column="permission_code" property="permissionCode"/>
+        <result column="permission_name" property="permissionName"/>
+    </resultMap>
+
+    <insert id="add" parameterType="com.abc.model.Permission">
+        insert into `permission` (permission_code, permission_name)
+        values (#{permissionCode}, #{permissionName})
+    </insert>
+
+    <update id="update" parameterType="com.abc.model.Permission">
+        update `permission`
+        set permission_name=#{permissionName}
+        where permission_code = #{permissionCode}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from `permission` where id = #{id}
+    </delete>
+
+    <select id="getById" resultMap="permissionResultMap">
+        select *
+        from `permission`
+        where id = #{id}
+    </select>
+
+    <select id="getByPermissionCode" resultMap="permissionResultMap">
+        select *
+        from `permission`
+        where permission_code = #{permissionCode}
+    </select>
+
+    <select id="getAllPermission" resultMap="permissionResultMap">
+        select *
+        from `permission`
+    </select>
+
+</mapper>

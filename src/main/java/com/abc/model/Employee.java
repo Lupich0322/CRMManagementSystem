@@ -46,4 +46,9 @@ public class Employee implements Serializable {
      */
     private List<Role> roles;
 
+    /**
+     * 用户的角色名称
+     */
+    private String roleGroup;
+
 }

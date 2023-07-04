@@ -1,8 +1,8 @@
 package com.abc.service.impl;
 
-import com.abc.api.EmployeeAPI;
+import com.abc.controller.EmployeeController;
 import com.abc.mapper.EmployeeMapper;
-import com.abc.controller.Result;
+import com.abc.Result;
 import com.abc.mapper.PermissionMapper;
 import com.abc.mapper.RoleMapper;
 import com.abc.model.Employee;
@@ -16,7 +16,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -93,7 +92,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Result<Employee> isLogin(HttpSession session) {
         Result<Employee> result = new Result<>();
         // 从session中取出用户信息
-        Employee sessionEmployee = (Employee) session.getAttribute(EmployeeAPI.SESSION_NAME);
+        Employee sessionEmployee = (Employee) session.getAttribute(EmployeeController.SESSION_NAME);
         // 若session中没有用户信息这说明用户未登录
         if (sessionEmployee == null) {
             result.setResultFailed("用户未登录！");
@@ -125,16 +124,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Result<List<Permission>> getPermissionsByEmployeeId(Integer employeeId) {
-        Result<List<Permission>> result = new Result<>();
+    public Result<List<Role>> getRolesByEmployeeId(Integer employeeId) {
+        Result<List<Role>> result = new Result<>();
         List<Role> roles = employeeMapper.getRolesByEmployeeId(employeeId);
         if (roles == null || roles.isEmpty()) {
             result.setResultFailed("该用户没有任何角色！");
             return result;
         }
-        List<Permission> permissions = new ArrayList<>();
-        for (Role role : roles) {
-            permissions.addAll(roleMapper.getPermissionsByRoleId(role.getId()));
+        result.setResultSuccess("获取角色成功！", roles);
+        return result;
+    }
+
+    @Override
+    public Result<List<Permission>> getPermissionsByEmployeeId(Integer employeeId) {
+        Result<List<Permission>> result = new Result<>();
+        List<Permission> permissions = employeeMapper.getPermissionsByEmployeeId(employeeId);
+        if (permissions == null || permissions.isEmpty()) {
+            result.setResultFailed("该用户没有任何权限！");
+            return result;
         }
         result.setResultSuccess("获取权限成功！", permissions);
         return result;

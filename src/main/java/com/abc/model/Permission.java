@@ -18,8 +18,19 @@ public class Permission implements Serializable {
     private Integer id;
 
     /**
+     * 权限编码
+     */
+    @NotEmpty(message = "权限编码不能为空！")
+    private String permissionCode;
+
+    /**
      * 权限名称
      */
     @NotEmpty(message = "权限名称不能为空！")
     private String permissionName;
+
+    /**
+     * 权限参数
+     */
+    private String permissionParam;
 }
