@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 用户类
@@ -39,5 +40,10 @@ public class Employee implements Serializable {
     @NotEmpty(message = "密码不能为空！")
     @Size(min = 8, message = "密码长度不能小于8！")
     private String employeePassword;
+
+    /**
+     * 用户的角色集合
+     */
+    private List<Role> roles;
 
 }

@@ -1,7 +1,10 @@
 package com.abc.mapper;
 
 import com.abc.model.Employee;
+import com.abc.model.Role;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 
 @Mapper
@@ -46,5 +49,8 @@ public interface EmployeeMapper {
      * @return 用户对象
      */
     Employee getByEmployeeCode(String employeeCode);
+
+
+    List<Role> getRolesByEmployeeId(Integer employeeId);
 
 }

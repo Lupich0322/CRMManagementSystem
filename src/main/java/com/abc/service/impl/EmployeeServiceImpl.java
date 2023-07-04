@@ -3,7 +3,11 @@ package com.abc.service.impl;
 import com.abc.api.EmployeeAPI;
 import com.abc.mapper.EmployeeMapper;
 import com.abc.controller.Result;
+import com.abc.mapper.PermissionMapper;
+import com.abc.mapper.RoleMapper;
 import com.abc.model.Employee;
+import com.abc.model.Permission;
+import com.abc.model.Role;
 import com.abc.service.EmployeeService;
 import com.abc.util.ClassExamine;
 import jakarta.servlet.http.HttpSession;
@@ -12,12 +16,19 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Component
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeMapper employeeMapper;
+    @Autowired
+    private RoleMapper roleMapper;
+    @Autowired
+    private PermissionMapper permissionMapper;
 
     @Override
     public Result<Employee> register(Employee employee) {
@@ -110,6 +121,22 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         employeeMapper.getByEmployeeCode(String.valueOf(employee));
         result.setResultSuccess("查询成功！", employee);
+        return result;
+    }
+
+    @Override
+    public Result<List<Permission>> getPermissionsByEmployeeId(Integer employeeId) {
+        Result<List<Permission>> result = new Result<>();
+        List<Role> roles = employeeMapper.getRolesByEmployeeId(employeeId);
+        if (roles == null || roles.isEmpty()) {
+            result.setResultFailed("该用户没有任何角色！");
+            return result;
+        }
+        List<Permission> permissions = new ArrayList<>();
+        for (Role role : roles) {
+            permissions.addAll(roleMapper.getPermissionsByRoleId(role.getId()));
+        }
+        result.setResultSuccess("获取权限成功！", permissions);
         return result;
     }
 }
