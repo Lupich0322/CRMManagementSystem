@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class OrganizationServiceImpl implements OrganizationService {
@@ -145,5 +146,41 @@ public class OrganizationServiceImpl implements OrganizationService {
             result.setResultFailed(e.getMessage());
         }
         return result;
+    }
+
+    @Override
+    public Result<Boolean> updateSuperiorRegionCode(String orgCode, String superiorRegionCode) {
+        int result = organizationMapper.updateSuperiorRegionCode(orgCode, superiorRegionCode);
+        Result<Boolean> resultData = new Result<>();
+        if (result > 0) {
+            resultData.setResultSuccess("成功修改上级行政区域编码");
+        } else {
+            resultData.setResultFailed("未能成功修改上级行政编码");
+        }
+        return resultData;
+    }
+
+    @Override
+    public Result<List<Organization>> getOrganizationsByRegionLevel(Integer regionLevel) {
+        List<Organization> organizations = organizationMapper.getByRegionLevel(regionLevel);
+        Result<List<Organization>> resultData = new Result<>();
+        if (organizations != null) {
+            resultData.setResultSuccess("按行政区域级别成功检索组织", organizations);
+        } else {
+            resultData.setResultFailed("按行政区域级别未能成功检索组织");
+        }
+        return resultData;
+    }
+
+    @Override
+    public Result<Map<String, Integer>> getOrganizationCountByRegion() {
+        Map<String, Integer> count = organizationMapper.countOrganizationsByRegion();
+        Result<Map<String, Integer>> resultData = new Result<>();
+        if (count != null) {
+            resultData.setResultSuccess("已成功检索按区域划分的组织数量", count);
+        } else {
+            resultData.setResultFailed("未能成功检索按区域划分的组织数量");
+        }
+        return resultData;
     }
 }

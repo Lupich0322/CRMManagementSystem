@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/organizations")
@@ -68,5 +69,20 @@ public class OrganizationController {
     @GetMapping("/getOrganizationsBySuperiorRegionName/{superiorRegionName}")
     public Result<List<Organization>> getOrganizationsBySuperiorRegionName(@PathVariable("superiorRegionName") String superiorRegionName) {
         return organizationService.getOrganizationsBySuperiorRegionName(superiorRegionName);
+    }
+
+    @PutMapping("/updateSuperiorRegionCode/{orgCode}/{superiorRegionCode}")
+    public Result<Boolean> updateSuperiorRegionCode(@PathVariable("orgCode") String orgCode, @PathVariable("superiorRegionCode") String superiorRegionCode) {
+        return organizationService.updateSuperiorRegionCode(orgCode, superiorRegionCode);
+    }
+
+    @GetMapping("/getOrganizationsByRegionLevel/{regionLevel}")
+    public Result<List<Organization>> getOrganizationsByRegionLevel(@PathVariable("regionLevel") Integer regionLevel) {
+        return organizationService.getOrganizationsByRegionLevel(regionLevel);
+    }
+
+    @GetMapping("/getOrganizationCountByRegion")
+    public Result<Map<String, Integer>> getOrganizationCountByRegion() {
+        return organizationService.getOrganizationCountByRegion();
     }
 }

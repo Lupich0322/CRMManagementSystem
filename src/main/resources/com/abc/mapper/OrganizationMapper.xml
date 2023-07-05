@@ -79,4 +79,21 @@
         SELECT * FROM `Organization` WHERE superior_region_name = #{superiorRegionName}
     </select>
 
+    <update id="updateSuperiorRegionCode" parameterType="java.util.Map">
+        UPDATE `Organization`
+        SET superior_region_code = #{superiorRegionCode}
+        WHERE org_code = #{orgCode}
+    </update>
+
+    <select id="getByRegionLevel" resultMap="organizationResultMap">
+        SELECT * FROM `Organization` WHERE region_level = #{regionLevel}
+    </select>
+
+    <select id="countOrganizationsByRegion">
+        SELECT region_name, COUNT(*) as count
+        FROM `Organization`
+        GROUP BY region_name
+    </select>
+
+
 </mapper>
