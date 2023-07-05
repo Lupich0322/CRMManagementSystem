@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.abc.mapper.OrganizationMapper">
+
+    <resultMap id="organizationResultMap" type="com.abc.model.Organization">
+        <id column="id" property="id"/>
+        <result column="org_code" property="orgCode"/>
+        <result column="org_name" property="orgName"/>
+        <result column="superior_org_code" property="superiorOrgCode"/>
+        <result column="superior_org_name" property="superiorOrgName"/>
+        <result column="region_code" property="regionCode"/>
+        <result column="region_name" property="regionName"/>
+        <result column="superior_region_code" property="superiorRegionCode"/>
+        <result column="superior_region_name" property="superiorRegionName"/>
+        <result column="region_level" property="regionLevel"/>
+        <result column="org_type" property="orgType"/>
+    </resultMap>
+
+    <insert id="add" parameterType="com.abc.model.Organization">
+        INSERT INTO `Organization`
+        (org_code, org_name, superior_org_code, superior_org_name,
+         region_code, region_name, superior_region_code, superior_region_name,
+         region_level, org_type)
+        VALUES
+            (#{orgCode}, #{orgName}, #{superiorOrgCode}, #{superiorOrgName},
+             #{regionCode}, #{regionName}, #{superiorRegionCode}, #{superiorRegionName},
+             #{regionLevel}, #{orgType})
+    </insert>
+
+    <update id="update" parameterType="com.abc.model.Organization">
+        UPDATE `Organization`
+        SET
+            org_code = #{orgCode},
+            org_name = #{orgName},
+            superior_org_code = #{superiorOrgCode},
+            superior_org_name = #{superiorOrgName},
+            region_code = #{regionCode},
+            region_name = #{regionName},
+            superior_region_code = #{superiorRegionCode},
+            superior_region_name = #{superiorRegionName},
+            region_level = #{regionLevel},
+            org_type = #{orgType}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteByOrgCode" parameterType="string">
+        DELETE FROM `Organization` WHERE org_code = #{orgCode}
+    </delete>
+
+    <delete id="deleteByOrgName" parameterType="string">
+        DELETE FROM `Organization` WHERE org_name = #{orgName}
+    </delete>
+
+    <select id="getById" resultMap="organizationResultMap">
+        SELECT * FROM `Organization` WHERE id = #{id}
+    </select>
+
+    <select id="getByOrgCode" resultMap="organizationResultMap">
+        SELECT * FROM `Organization` WHERE org_code = #{orgCode}
+    </select>
+
+    <select id="getByOrgName" resultMap="organizationResultMap">
+        SELECT * FROM `Organization` WHERE org_name = #{orgName}
+    </select>
+
+    <select id="getByRegionCode" resultMap="organizationResultMap">
+        SELECT * FROM `Organization` WHERE region_code = #{regionCode}
+    </select>
+
+    <select id="getByRegionName" resultMap="organizationResultMap">
+        SELECT * FROM `Organization` WHERE region_name = #{regionName}
+    </select>
+
+    <select id="getBySuperiorRegionCode" resultMap="organizationResultMap">
+        SELECT * FROM `Organization` WHERE superior_region_code = #{superiorRegionCode}
+    </select>
+
+    <select id="getBySuperiorRegionName" resultMap="organizationResultMap">
+        SELECT * FROM `Organization` WHERE superior_region_name = #{superiorRegionName}
+    </select>
+
+</mapper>

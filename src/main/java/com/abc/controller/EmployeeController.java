@@ -42,7 +42,6 @@ public class EmployeeController {
             result.setResultFailed(errors.getFieldError().getDefaultMessage());
             return result;
         }
-
         // 调用注册服务
         result = employeeService.register(employee);
         return result;
@@ -177,7 +176,6 @@ public class EmployeeController {
         result = employeeService.deleteEmployee(employeeCode);
         return result;
     }
-
 
     /**
      * 用户登出
