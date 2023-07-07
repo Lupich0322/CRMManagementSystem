@@ -2,7 +2,7 @@ import java.io.File;
 
 public class Test {
     public static void main(String[] args) {
-        File dir = new File("D:\\A-workspace\\CRMManagementSystem");  // 替换为你需要查看的目录路径
+        File dir = new File("C:\\Users\\lyx\\IdeaProjects\\CRMManagementSystem");  // 替换为你需要查看的目录路径
         printDirectoryTree(dir, "");
     }
 

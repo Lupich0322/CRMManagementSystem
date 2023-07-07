@@ -16,16 +16,13 @@
         <result column="org_type" property="orgType"/>
     </resultMap>
 
-    <insert id="add" parameterType="com.abc.model.Organization">
+    <insert id="add" parameterType="com.abc.model.Organization" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `Organization`
-        (org_code, org_name, superior_org_code, superior_org_name,
-         region_code, region_name, superior_region_code, superior_region_name,
-         region_level, org_type)
+            (org_code, org_name)
         VALUES
-            (#{orgCode}, #{orgName}, #{superiorOrgCode}, #{superiorOrgName},
-             #{regionCode}, #{regionName}, #{superiorRegionCode}, #{superiorRegionName},
-             #{regionLevel}, #{orgType})
+            (#{orgCode}, #{orgName})
     </insert>
+
 
     <update id="update" parameterType="com.abc.model.Organization">
         UPDATE `Organization`
