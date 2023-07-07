@@ -2,7 +2,6 @@ package com.abc.mapper;
 
 
 import com.abc.model.Organization;
-import com.abc.model.Permission;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -15,6 +14,7 @@ public interface OrganizationMapper {
     int update(Organization organization);
     int deleteByOrgCode(String orgCode);
     int deleteByOrgName(String orgName);
+
     Organization getById(Integer id);
     Organization getByOrgCode(String orgCode);
     Organization getByOrgName(String orgName);

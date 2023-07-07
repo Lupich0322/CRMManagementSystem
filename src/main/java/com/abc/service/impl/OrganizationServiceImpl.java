@@ -44,25 +44,35 @@ public class OrganizationServiceImpl implements OrganizationService {
     public Result<Boolean> deleteOrganizationByOrgCode(String orgCode) {
         Result<Boolean> result = new Result<>();
         try {
-            organizationMapper.deleteByOrgCode(orgCode);
-            result.setResultSuccess("组织信息删除成功", true);
+            int rows = organizationMapper.deleteByOrgCode(orgCode);
+            if (rows > 0) {
+                result.setResultSuccess("组织信息删除成功", true);
+            } else {
+                result.setResultSuccess("未找到匹配的组织信息", false);
+            }
         } catch (Exception e) {
             result.setResultFailed(e.getMessage());
         }
         return result;
     }
 
+
     @Override
     public Result<Boolean> deleteOrganizationByOrgName(String orgName) {
         Result<Boolean> result = new Result<>();
         try {
-            organizationMapper.deleteByOrgName(orgName);
-            result.setResultSuccess("组织信息删除成功", true);
+            int rows = organizationMapper.deleteByOrgName(orgName);
+            if (rows > 0) {
+                result.setResultSuccess("组织信息删除成功", true);
+            } else {
+                result.setResultSuccess("未找到匹配的组织信息", false);
+            }
         } catch (Exception e) {
             result.setResultFailed(e.getMessage());
         }
         return result;
     }
+
 
     @Override
     public Result<Organization> getOrganizationById(Integer id) {

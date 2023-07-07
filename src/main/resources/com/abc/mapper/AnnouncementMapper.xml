@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.abc.mapper.AnnouncementMapper">
+
+    <resultMap id="announcementResultMap" type="com.abc.model.Announcement">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="keywords" property="keywords"/>
+        <result column="category" property="category"/>
+        <result column="urgency_level" property="urgencyLevel"/>
+        <result column="publish_time" property="publishTime"/>
+        <result column="publisher" property="publisher"/>
+        <result column="publish_object" property="publishObject"/>
+        <result column="content" property="content"/>
+        <result column="attachment" property="attachment"/>
+    </resultMap>
+
+    <insert id="createAnnouncement" parameterType="com.abc.model.Announcement">
+        INSERT INTO Announcement(title, keywords, category, urgency_level, publish_time, publisher, publish_object, content, attachment)
+        VALUES (#{title}, #{keywords}, #{category}, #{urgencyLevel}, #{publishTime}, #{publisher}, #{publishObject}, #{content}, #{attachment})
+    </insert>
+
+    <select id="getByTitle" resultMap="announcementResultMap">
+        SELECT * FROM `Announcement` WHERE title = #{title}
+    </select>
+
+</mapper>

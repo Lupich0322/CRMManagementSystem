@@ -91,12 +91,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Result<Employee> addEmployee(Employee employee) {
         Result<Employee> result = new Result<>();
-        int rows = employeeMapper.add(employee);
-        if (rows > 0) {
-            result.setResultSuccess("添加用户成功！", employee);
-        } else {
-            result.setResultFailed("添加用户失败！");
+        // 先去数据库找用户名是否存在
+        Employee getEmployee = employeeMapper.getByEmployeeName(employee.getEmployeeName());
+        if (getEmployee != null) {
+            result.setResultFailed("该用户名已存在！");
+            return result;
         }
+        // 加密储存用户的密码
+        employee.setEmployeePassword(DigestUtils.md5Hex(employee.getEmployeePassword()));
+        // 存入数据库
+        employeeMapper.add(employee);
+        // 返回成功消息
+        result.setResultSuccess("添加用户成功！", employee);
         return result;
     }
 
