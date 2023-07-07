@@ -12,5 +12,5 @@ public class Attachment {
     private Integer id;
     private Integer announcementId;
     private String fileType;
-    private byte[] fileData;
+    private String filePath;
 }

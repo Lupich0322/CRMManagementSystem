@@ -6,8 +6,11 @@ import com.abc.service.AnnouncementService;
 import com.abc.service.AttachmentService;
 import com.abc.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 
 @RestController
@@ -18,6 +21,8 @@ public class AnnouncementController {
     private AnnouncementService announcementService;
     @Autowired
     private AttachmentService attachmentService;
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
     @PostMapping("/create")
     public Result<Announcement> createAnnouncement(@RequestBody Announcement announcement) {
@@ -82,10 +87,17 @@ public class AnnouncementController {
     public Result<Attachment> uploadAttachment(@PathVariable Integer announcementId, @RequestParam("file") MultipartFile file) {
         Result<Attachment> result;
         try {
+            // 创建文件在服务器上的路径
+            File uploadFile = new File(uploadDir, file.getOriginalFilename());
+            // 将上传的文件保存到服务器
+            file.transferTo(uploadFile);
+
             Attachment attachment = new Attachment();
             attachment.setAnnouncementId(announcementId);
             attachment.setFileType(file.getContentType());
-            attachment.setFileData(file.getBytes());
+            // 保存文件的路径，而不是文件的数据
+            attachment.setFilePath(uploadFile.getAbsolutePath());
+
             result = attachmentService.createAttachment(attachment);
         } catch (Exception e) {
             result = new Result<>();

@@ -7,12 +7,12 @@
         <id column="id" property="id"/>
         <result column="announcementId" property="announcementId"/>
         <result column="fileType" property="fileType"/>
-        <result column="fileData" property="fileData"/>
+        <result column="filePath" property="filePath"/>
     </resultMap>
 
     <insert id="createAttachment" parameterType="com.abc.model.Attachment">
-        INSERT INTO Attachment(announcement_id, file_type, file_data)
-        VALUES (#{announcementId}, #{fileType}, #{fileData})
+        INSERT INTO Attachment(announcement_id, file_type, file_path)
+        VALUES (#{announcementId}, #{fileType}, #{filePath})
     </insert>
 
 
