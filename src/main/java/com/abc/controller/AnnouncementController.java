@@ -1,10 +1,14 @@
 package com.abc.controller;
 
 import com.abc.model.Announcement;
+import com.abc.model.Attachment;
 import com.abc.service.AnnouncementService;
+import com.abc.service.AttachmentService;
 import com.abc.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 
 @RestController
 @RequestMapping("/announcement")
@@ -12,6 +16,8 @@ public class AnnouncementController {
 
     @Autowired
     private AnnouncementService announcementService;
+    @Autowired
+    private AttachmentService attachmentService;
 
     @PostMapping("/create")
     public Result<Announcement> createAnnouncement(@RequestBody Announcement announcement) {
@@ -72,7 +78,21 @@ public class AnnouncementController {
         return result;
     }
 
-
+    @PostMapping("/uploadAttachment/{announcementId}")
+    public Result<Attachment> uploadAttachment(@PathVariable Integer announcementId, @RequestParam("file") MultipartFile file) {
+        Result<Attachment> result;
+        try {
+            Attachment attachment = new Attachment();
+            attachment.setAnnouncementId(announcementId);
+            attachment.setFileType(file.getContentType());
+            attachment.setFileData(file.getBytes());
+            result = attachmentService.createAttachment(attachment);
+        } catch (Exception e) {
+            result = new Result<>();
+            result.setResultFailed("未能成功上传附件: " + e.getMessage());
+        }
+        return result;
+    }
 
 
 }

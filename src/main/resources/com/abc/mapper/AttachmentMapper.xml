@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.abc.mapper.AttachmentMapper">
+
+    <resultMap id="attachmentResultMap" type="com.abc.model.Attachment">
+        <id column="id" property="id"/>
+        <result column="announcementId" property="announcementId"/>
+        <result column="fileType" property="fileType"/>
+        <result column="fileData" property="fileData"/>
+    </resultMap>
+
+    <insert id="createAttachment" parameterType="com.abc.model.Attachment">
+        INSERT INTO Attachment(announcement_id, file_type, file_data)
+        VALUES (#{announcementId}, #{fileType}, #{fileData})
+    </insert>
+
+
+</mapper>
