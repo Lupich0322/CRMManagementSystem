@@ -2,14 +2,13 @@ package com.abc.service.impl;
 
 import com.abc.mapper.AnnouncementMapper;
 import com.abc.model.Announcement;
-import com.abc.model.Employee;
 import com.abc.service.AnnouncementService;
 import com.abc.util.ClassExamine;
 import com.abc.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Autowired
@@ -40,6 +39,43 @@ public class AnnouncementServiceImpl implements AnnouncementService {
             return result;
         }
         result.setResultSuccess("查询成功！", announcement);
+        return result;
+    }
+
+    @Override
+    public Result<Announcement> publishAnnouncement(Integer id) {
+        Result<Announcement> result = new Result<>();
+        int rows = announcementMapper.updateAnnouncementStatus(id, "published");
+        if (rows > 0) {
+            result.setResultSuccess("公告发布成功！");
+        } else {
+            result.setResultFailed("公告发布失败！");
+        }
+        return result;
+    }
+
+    @Override
+    public Result<Announcement> saveAnnouncementAsDraft(Announcement announcement) {
+        Result<Announcement> result = new Result<>();
+        announcement.setStatus("draft");
+        int rows = announcementMapper.createAnnouncement(announcement);
+        if (rows > 0) {
+            result.setResultSuccess("公告保存为草稿成功！", announcement);
+        } else {
+            result.setResultFailed("公告保存为草稿失败！");
+        }
+        return result;
+    }
+
+    @Override
+    public Result<Announcement> editAnnouncementContent(Integer id, String content) {
+        Result<Announcement> result = new Result<>();
+        int rows = announcementMapper.updateAnnouncementContent(id, content);
+        if (rows > 0) {
+            result.setResultSuccess("编辑公告内容成功！");
+        } else {
+            result.setResultFailed("编辑公告内容失败！");
+        }
         return result;
     }
 }

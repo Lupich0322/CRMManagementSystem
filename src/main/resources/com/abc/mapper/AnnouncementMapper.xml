@@ -25,4 +25,18 @@
         SELECT * FROM `Announcement` WHERE title = #{title}
     </select>
 
+    <update id="updateAnnouncementStatus">
+        UPDATE `Announcement`
+        SET status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateAnnouncementContent">
+        UPDATE `Announcement`
+        SET content = #{content}
+        WHERE id = #{id}
+    </update>
+
+
+
 </mapper>
