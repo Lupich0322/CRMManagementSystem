@@ -1,5 +1,7 @@
 package com.abc.service.impl;
 
+import com.abc.mapper.EmployeeMapper;
+import com.abc.model.Permission;
 import com.abc.util.Result;
 import com.abc.mapper.RoleMapper;
 import com.abc.model.Role;
@@ -14,6 +16,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private EmployeeMapper employeeMapper;
+
 
     @Override
     public Result<Role> createRole(Role role) {

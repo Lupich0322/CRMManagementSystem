@@ -121,6 +121,12 @@
       <optional>true</optional>
     </dependency>
 
+    <!--引入springsecurity-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+
 
   </dependencies>
 

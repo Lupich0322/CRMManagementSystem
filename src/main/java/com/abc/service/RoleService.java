@@ -1,5 +1,6 @@
 package com.abc.service;
 
+import com.abc.model.Permission;
 import com.abc.util.Result;
 import com.abc.model.Role;
 import org.springframework.stereotype.Service;
@@ -20,4 +21,5 @@ public interface RoleService {
     Result<List<Role>> getAllRoles();
 
     Result<Role> getRoleByRoleCode(String roleCode);
+
 }

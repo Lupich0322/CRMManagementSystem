@@ -23,14 +23,17 @@ public class InterceptorRegister implements WebMvcConfigurer {
         return new EmployeeInterceptor();
     }
 
-    /**
-     * 添加拦截器，并配置拦截地址
-     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         List<String> pathPatterns = new ArrayList<>();
-        pathPatterns.add("/update");
-        registry.addInterceptor(getInterceptor()).addPathPatterns(pathPatterns);
+        pathPatterns.add("/**");
+
+        List<String> excludePathPatterns = new ArrayList<>();
+        excludePathPatterns.add("/login");
+        excludePathPatterns.add("/register");
+
+        registry.addInterceptor(getInterceptor()).addPathPatterns(pathPatterns).excludePathPatterns(excludePathPatterns);
     }
+
 
 }

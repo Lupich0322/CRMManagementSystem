@@ -6,34 +6,60 @@
         <result column="employee_name" property="employeeName"/>
         <result column="employee_password" property="employeePassword"/>
     </resultMap>
-
+    <resultMap id="roleResultMap" type="com.abc.model.Role">
+        <id column="id" property="id"/>
+        <result column="role_code" property="roleCode"/>
+        <result column="role_name" property="roleName"/>
+    </resultMap>
+    <resultMap id="permissionResultMap" type="com.abc.model.Permission">
+        <id column="id" property="id"/>
+        <result column="permission_code" property="permissionCode"/>
+        <result column="permission_name" property="permissionName"/>
+        <result column="permission_param" property="permissionParam"/>
+    </resultMap>
 
     <insert id="add" parameterType="com.abc.model.Employee">
-        insert into `employee` (employee_code, employee_name, employee_password)
+        insert into `Employee` (employee_code, employee_name, employee_password)
         values (#{employeeCode}, #{employeeName}, #{employeePassword})
     </insert>
 
     <delete id="delete">
-        delete from `employee`
+        delete from `Employee`
         where employee_code = #{employeeCode}
     </delete>
 
     <update id="update" parameterType="com.abc.model.Employee">
-        update `employee`
+        update `Employee`
         set employee_password=#{employeePassword}
         where employee_code = #{employeeCode}
     </update>
 
     <select id="getByEmployeeName" resultMap="userResultMap">
         select *
-        from `employee`
+        from `Employee`
         where employee_name = #{employeeName}
     </select>
 
     <select id="getByEmployeeCode" resultMap="userResultMap">
         select *
-        from `employee`
+        from `Employee`
         where employee_code = #{employeeCode}
+    </select>
+
+    <select id="getRolesByEmployeeCode" resultMap="roleResultMap">
+        SELECT Role.*
+        FROM EmployeeRole
+                 JOIN Role ON EmployeeRole.role_id = Role.id
+        WHERE EmployeeRole.employee_code = #{employeeCode}
+    </select>
+
+    <select id="getPermissionsByEmployeeCode" resultMap="permissionResultMap">
+        SELECT Permission.*
+        FROM EmployeeRole
+                 JOIN Role ON EmployeeRole.role_id = Role.id
+                 JOIN RolePermission ON Role.id = RolePermission.role_id
+                 JOIN Permission ON RolePermission.permission_id = Permission.id
+        WHERE EmployeeRole.employee_code = #{employeeCode}
     </select>
 
 </mapper>

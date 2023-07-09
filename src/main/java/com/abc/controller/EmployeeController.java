@@ -35,17 +35,18 @@ public class EmployeeController {
      * @return 注册结果
      */
     @PostMapping("/register")
-    public Result<Employee> register(@RequestBody @Valid Employee employee, BindingResult errors, HttpServletRequest request) {
-        Result<Employee> result = new Result<>();
+    public Result<Object> register(@RequestBody @Valid Employee employee, BindingResult errors, HttpServletRequest request) {
+        Result<Object> result;
         // 如果校验有错，返回注册失败以及错误信息
         if (errors.hasErrors()) {
+            result = new Result<>();
             result.setResultFailed(errors.getFieldError().getDefaultMessage());
             return result;
         }
         // 调用注册服务
-        result = employeeService.register(employee);
-        return result;
+        return employeeService.register(employee);
     }
+
 
 
     /**
@@ -57,8 +58,8 @@ public class EmployeeController {
      * @return 登录结果
      */
     @PostMapping("/login")
-    public Result<Employee> login(@RequestBody @Valid Employee employee, BindingResult errors, HttpServletRequest request) {
-        Result<Employee> result;
+    public Result<Object> login(@RequestBody @Valid Employee employee, BindingResult errors, HttpServletRequest request) {
+        Result<Object> result;
         // 如果校验有错，返回登录失败以及错误信息
         if (errors.hasErrors()) {
             result = new Result<>();
@@ -66,13 +67,9 @@ public class EmployeeController {
             return result;
         }
         // 调用登录服务
-        result = employeeService.login(employee);
-        // 如果登录成功，则设定session
-        if (result.isSuccess()) {
-            request.getSession().setAttribute(SESSION_NAME, result.getData());
-        }
-        return result;
+        return employeeService.login(employee, request);
     }
+
 
     /**
      * 判断用户是否登录
@@ -81,9 +78,24 @@ public class EmployeeController {
      * @return 结果对象，已经登录则结果为成功，且数据体为用户信息；否则结果为失败，数据体为空
      */
     @GetMapping("/is-login")
-    public Result<Employee> isLogin(HttpServletRequest request) {
+    public Result<Object> isLogin(HttpServletRequest request) {
         // 传入session到用户服务层
         return employeeService.isLogin(request.getSession());
+    }
+
+    /**
+     * 用户登出
+     *
+     * @param request 请求，用于操作session
+     * @return 结果对象
+     */
+    @GetMapping("/logout")
+    public Result<Void> logout(HttpServletRequest request) {
+        Result<Void> result = new Result<>();
+        // 用户登出很简单，就是把session里面的用户信息设为null即可
+        request.getSession().setAttribute(SESSION_NAME, null);
+        result.setResultSuccess("用户退出登录成功！");
+        return result;
     }
 
     /**
@@ -118,7 +130,7 @@ public class EmployeeController {
      * @param request 请求对象，用于操作session
      * @return 修改结果
      */
-    @GetMapping("/employee/select")
+    @GetMapping("/employee/find")
     public Result<Employee> select(@RequestBody Employee employee, HttpServletRequest request) throws Exception {
         Result<Employee> result = new Result<>();
         HttpSession session = request.getSession();
@@ -178,21 +190,6 @@ public class EmployeeController {
     }
 
     /**
-     * 用户登出
-     *
-     * @param request 请求，用于操作session
-     * @return 结果对象
-     */
-    @GetMapping("/logout")
-    public Result<Void> logout(HttpServletRequest request) {
-        Result<Void> result = new Result<>();
-        // 用户登出很简单，就是把session里面的用户信息设为null即可
-        request.getSession().setAttribute(SESSION_NAME, null);
-        result.setResultSuccess("用户退出登录成功！");
-        return result;
-    }
-
-    /**
      * 获取用户的所有角色
      *
      * @param employeeCode 用户工号
@@ -200,7 +197,7 @@ public class EmployeeController {
      * @return 用户的所有角色
      */
     @GetMapping("/employee/{employeeCode}/roles")
-    public Result<List<Role>> getRolesByEmployeeId(@PathVariable Integer employeeCode, HttpServletRequest request) {
+    public Result<List<Role>> getRolesByEmployeeCode(@PathVariable Integer employeeCode, HttpServletRequest request) {
         Result<List<Role>> result = new Result<>();
         // 检查session中的用户（即当前登录用户）是否和当前查询的用户一致
         Employee sessionEmployee = (Employee) request.getSession().getAttribute(SESSION_NAME);
@@ -221,7 +218,7 @@ public class EmployeeController {
      * @return 用户的所有权限
      */
     @GetMapping("/employee/{employeeCode}/permissions")
-    public Result<List<Permission>> getPermissionsByEmployeeId(@PathVariable Integer employeeCode, HttpServletRequest request) {
+    public Result<List<Permission>> getPermissionsByEmployeeCode(@PathVariable Integer employeeCode, HttpServletRequest request) {
         Result<List<Permission>> result = new Result<>();
         // 检查session中的用户（即当前登录用户）是否和当前查询的用户一致
         Employee sessionEmployee = (Employee) request.getSession().getAttribute(SESSION_NAME);
